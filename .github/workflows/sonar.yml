@@ -7,8 +7,8 @@ on:
 
 
 jobs:
-  build:
-    name: Build
+  build-analyze-scan:
+    name:  Build, Analyze, and Scan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -45,3 +45,15 @@ jobs:
           docker push umer1212/netflix-clone:latest
         env:
           DOCKER_CLI_ACI: 1
+
+
+  deploy:
+    needs: build-analyze-scan
+    runs-on: [aws-netflix]
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull umer1212/netflix-clone:latest
+      - name: scan image
+        run: trivy image umer1212/netflix-clone:latestt
+      - name: Run docker container
+        run: docker run -d --name netflix -p 8081:80 umer1212/netflix-clone:latest 
