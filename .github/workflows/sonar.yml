@@ -54,6 +54,6 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull umer1212/netflix-clone:latest
       - name: scan image
-        run: trivy image umer1212/netflix-clone:latestt
+        run: trivy image umer1212/netflix-clone:latest
       - name: Run docker container
         run: docker run -d --name netflix -p 8081:80 umer1212/netflix-clone:latest 
